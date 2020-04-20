@@ -1,0 +1,16 @@
+{
+  "id": "1765189",
+  "name": "template_icon",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "13616699",
+      "name": "message",
+      "font_class": "message",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}
