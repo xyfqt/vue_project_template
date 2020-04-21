@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router/index'
-import store from './store/index'
-import './utils/htmlFontSize'
-import './assets/styles/global.scss'
-import "@/utils/MostonePayApiT";
+import router from './router'
+import store from './store'
+// import './assets/js/htmlFontSizeNoScale'
+import './assets/js/fastClick'
+import './components'
+import './icons'
+
+// import "./assets/css/font/iconfont.css"
 
 Vue.config.productionTip = false
-
 
 new Vue({
   router,
