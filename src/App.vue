@@ -14,9 +14,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+html{
+
+}
 html,body{
   padding: 0;
   margin: 0;
+  font-size: calc(100vw / 10);
 }
 
 /*#nav {*/

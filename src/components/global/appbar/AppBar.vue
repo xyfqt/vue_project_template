@@ -2,7 +2,7 @@
   <div class="app-bar">
     <div class="app-bar_wrap">
       <slot name="leftBar">
-        <div class="app-bar_left app-bar_btn">左</div>
+        <div class="app-bar_left app-bar_btn"><van-icon name="arrow-left" /></div>
       </slot>
       <slot name="centerBar">
         <div class="app-bar_center" :params="'test'">标题</div>
@@ -25,21 +25,22 @@ export default {
 
 .app-bar {
   width: 100%;
-  min-height: px2rem(160);
+  min-height: px2rem(110);
   background: #e7e7e7;
   .app-bar_wrap {
     position: fixed;
     width: 100%;
-    min-height: px2rem(160);
+    min-height: px2rem(110);
     background: #e7e7e7;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: px2rem(32);
     .app-bar_btn{
-        width: px2rem(240);
-        height: 100%; 
+        width: px2rem(100);
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;

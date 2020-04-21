@@ -7,9 +7,13 @@ import './assets/js/fastClick'
 import './components'
 import './icons'
 
+import Vant from 'vant';
+import 'vant/lib/index.css';
+
 import "./assets/css/font/iconfont.css"
 
 Vue.config.productionTip = false
+Vue.use(Vant);
 
 new Vue({
   router,

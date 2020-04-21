@@ -100,11 +100,11 @@
         //   this.currentDis = -100 *  this.current +'%';
         // }else
         //
-        if (baseSize > 0.3) {
+        if (baseSize > 0.3 || x - this.touchX > 50) {
           if (this.current != 0) {
             this.current = this.current - 1;
           }
-        } else if (baseSize < -0.3) {
+        } else if (baseSize < -0.3 ||  x - this.touchX < -50) {
           if (this.current != this.tabData.length - 1) {
             this.current = this.current + 1;
           }
@@ -163,7 +163,7 @@
   }
 
   .wrap-tab {
-    min-height: px2rem(840);
+    min-height: px2rem(340);
     position: relative;
     transition: all 0.3s;
     .tab-body {
