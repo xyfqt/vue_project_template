@@ -19,3 +19,15 @@ $checkSize: px2rem(18);
 $stateBarHeight: px2rem(22);
 // IphoneX 底部操作位置高度
 $iphoneXBottomHeight: px2rem(34);
+
+@mixin center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@mixin centerV() {
+    display: flex;
+    flex-direction: column;;
+    align-items: center;
+    justify-content: center;
+}

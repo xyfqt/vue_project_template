@@ -10,7 +10,7 @@
         @click="selectTab(index)"
       >{{ item.value }}
       </li>
-      <li class="border-bottom" :style="{ left: left }" v-if="!lineStyle" ref="line"></li>
+      <li class="border-bottom" :style="{ left: left,marginLeft: -baseWidth / 2 + 'px'}" v-if="!lineStyle" ref="line"></li>
     </ul>
     <slot name="tabBody">
       <div class="navbar-wrap">
@@ -54,14 +54,15 @@
         current: 0,
         left: 0,
         touchX: 0,
-        currentDis: 0
+        currentDis: 0,
+        baseWidth:10
       };
     },
     mounted() {
       this.$nextTick(() => {
         if (this.$refs.line) {
           this.$refs.line.style.width =
-            this.$refs.item[this.current].clientWidth + "px";
+            this.$refs.item[this.current].clientWidth + this.baseWidth + "px";
           this.left = this.$refs.item[this.current].offsetLeft + "px";
         }
       });
@@ -70,7 +71,7 @@
       current() {
         if (this.$refs.line) {
           this.$refs.line.style.width =
-            this.$refs.item[this.current].clientWidth + "px";
+            this.$refs.item[this.current].clientWidth + this.baseWidth + "px";
           this.left = this.$refs.item[this.current].offsetLeft + "px";
         }
         this.currentDis = -100 * this.current + '%';
