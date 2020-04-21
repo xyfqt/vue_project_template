@@ -166,7 +166,6 @@
     min-height: px2rem(840);
     position: relative;
     transition: all 0.3s;
-
     .tab-body {
       position: absolute;
       top: 0;

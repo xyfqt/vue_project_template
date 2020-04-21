@@ -1,4 +1,6 @@
 const path = require('path')
+const autoprefixer = require('autoprefixer')
+const pxtorem = require('postcss-pxtorem')
 
 function resolve(dir) {
   return path.join(__dirname, './', dir)
@@ -6,6 +8,22 @@ function resolve(dir) {
 
 module.exports = {
   lintOnSave:false,
+  // css: {
+  //   sourceMap: true,
+  //   loaderOptions: {
+  //     postcss: {
+  //       plugins: [
+  //         autoprefixer(),
+  //         pxtorem({
+  //           rootValue: 37.5,
+  //           propList: ['*']
+  //         })
+  //       ]
+  //     }
+  //   }
+  // },
+
+
   chainWebpack: config => {
     // 这里是对环境的配置，不同环境对应不同的BASE_API，以便axios的请求地址不同
     config.plugin('define').tap(args => {
