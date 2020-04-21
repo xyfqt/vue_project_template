@@ -7,7 +7,7 @@ import './assets/js/fastClick'
 import './components'
 import './icons'
 
-// import "./assets/css/font/iconfont.css"
+import "./assets/css/font/iconfont.css"
 
 Vue.config.productionTip = false
 
