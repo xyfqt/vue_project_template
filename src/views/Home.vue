@@ -5,18 +5,13 @@
         我是子标题
       </template>
     </app-bar>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <i class="iconfont icon-message"></i>
-    <svg-icon icon-class="loading" />
     <nav-bar>
       <template #1>
-        1
+        <svg-icon icon-class="loading" />
+        <i class="iconfont icon-message"></i>
       </template>
       <template #2>
-        2
-      </template>
-      <template #3>
-        3
+        <img alt="Vue logo" src="../assets/logo.png">
       </template>
     </nav-bar>
   </div>

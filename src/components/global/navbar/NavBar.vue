@@ -10,15 +10,21 @@
         @click="selectTab(index)"
       >{{ item.value }}
       </li>
-      <li class="border-bottom" :style="{ left: left,marginLeft: -baseWidth / 2 + 'px'}" v-if="!lineStyle" ref="line"></li>
+      <li class="border-bottom" :style="{ left: left,marginLeft: -baseWidth / 2 + 'px'}" v-if="!lineStyle"
+          ref="line"></li>
     </ul>
     <slot name="tabBody">
       <div class="navbar-wrap">
-        <div class="wrap-tab" :style="{ left: fllowScroll ? currentDis : '0'}" @touchstart="touchStart"
+        <div class="wrap-tab" :style="{ left: fllowScroll ? currentDis : '0'}"
+             @touchstart="touchStart"
              @touchmove="touchMove"
-             @touchend="touchEnd">
+             @touchend="touchEnd"
+             @touchcancel="touchCancel"
+        >
           <div class="tab-body" v-for="(item,index) in tabData" :key="item.key" :style="{ left: 100 * index + '%' }">
-            <slot :name="item.key"></slot>
+            <slot :name="item.key">
+              {{item.value}}
+            </slot>
           </div>
         </div>
       </div>
@@ -55,7 +61,7 @@
         left: 0,
         touchX: 0,
         currentDis: 0,
-        baseWidth:10
+        baseWidth: 10
       };
     },
     mounted() {
@@ -88,9 +94,11 @@
       touchMove(e) {
         let x = e.changedTouches[0].clientX;
         let total = document.body.clientWidth;
-        let baseSize =  ((x - this.touchX) + ((x - this.touchX) * 0.6)) / total;
-        this.currentDis = (-100 * this.current) + (baseSize * 100) + '%';
-        this.left = this.$refs.item[this.current].offsetLeft + (this.$refs.item[2].offsetLeft - (this.$refs.item[1].offsetLeft + this.$refs.item[1].clientWidth))*(-baseSize) + 'px';
+        let baseSize = ((x - this.touchX) + ((x - this.touchX) * 0.6)) / total;
+        if ((this.current != 0 || baseSize < 0) && (this.current != this.tabData.length - 1 || baseSize > 0)) {
+          this.currentDis = (-100 * this.current) + (baseSize * 100) + '%';
+          this.left = this.$refs.item[this.current].offsetLeft + (this.$refs.item[2].offsetLeft - (this.$refs.item[1].offsetLeft + this.$refs.item[1].clientWidth)) * (-baseSize) + 'px';
+        }
       },
       touchEnd(e) {
         let x = e.changedTouches[0].clientX;
@@ -104,11 +112,15 @@
           if (this.current != 0) {
             this.current = this.current - 1;
           }
-        } else if (baseSize < -0.3 ||  x - this.touchX < -50) {
+        } else if (baseSize < -0.3 || x - this.touchX < -50) {
           if (this.current != this.tabData.length - 1) {
             this.current = this.current + 1;
           }
         }
+        this.left = this.$refs.item[this.current].offsetLeft + 'px';
+        this.currentDis = -100 * this.current + '%';
+      },
+      touchCancel(){
         this.left = this.$refs.item[this.current].offsetLeft + 'px';
         this.currentDis = -100 * this.current + '%';
       }
@@ -129,6 +141,7 @@
 
     .tab-item {
       font-size: 16px;
+      padding-top: 10px;
       cursor: pointer;
       // &+.tab-item{
       //   margin-left: 36px;
@@ -153,7 +166,7 @@
       left: 0;
       height: 2px;
       background: #338cff;
-      transition: all 0.3s;
+      transition: all 0.5s;
     }
   }
 
@@ -163,9 +176,10 @@
   }
 
   .wrap-tab {
-    min-height: px2rem(340);
+    min-height: calc(100vh - 2.346657rem);
     position: relative;
-    transition: all 0.3s;
+    transition: all 0.5s;
+
     .tab-body {
       position: absolute;
       top: 0;
