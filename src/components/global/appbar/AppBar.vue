@@ -25,12 +25,12 @@ export default {
 
 .app-bar {
   width: 100%;
-  min-height: px2rem(110);
+  min-height: px2rem(100);
   background: #e7e7e7;
   .app-bar_wrap {
     position: fixed;
     width: 100%;
-    min-height: px2rem(110);
+    min-height: px2rem(100);
     background: #e7e7e7;
     top: 0;
     left: 0;
@@ -40,6 +40,7 @@ export default {
     font-size: px2rem(32);
     .app-bar_btn{
         width: px2rem(100);
+        min-height: px2rem(100);
         height: 100%;
         display: flex;
         justify-content: center;

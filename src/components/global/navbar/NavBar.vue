@@ -18,7 +18,7 @@
              @touchmove="touchMove"
              @touchend="touchEnd">
           <div class="tab-body" v-for="(item,index) in tabData" :key="item.key" :style="{ left: 100 * index + '%' }">
-            {{item.value}}
+            <slot :name="item.key"></slot>
           </div>
         </div>
       </div>
