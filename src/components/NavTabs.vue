@@ -21,11 +21,13 @@
              @touchend="touchEnd"
              @touchcancel="touchCancel"
         >
-          <div class="tab-body" v-for="(item,index) in tabData" :key="item.key" :style="{ left: 100 * index + '%' }">
-            <slot :name="item.key">
-              {{item.value}}
-            </slot>
-          </div>
+          <slot name="unFllowScroll">
+            <div class="tab-body" v-for="(item,index) in tabData" :key="item.key" :style="{ left: 100 * index + '%' }">
+              <slot :name="item.key">
+                {{item.value}}
+              </slot>
+            </div>
+          </slot>
         </div>
       </div>
     </slot>
@@ -34,7 +36,7 @@
 
 <script>
   export default {
-    name: "NavBar",
+    name: "NavTabs",
     props: {
       tabData: {
         type: Array,
@@ -61,7 +63,8 @@
         left: 0,
         touchX: 0,
         currentDis: 0,
-        baseWidth: 10
+        baseWidth: 10,
+        startTime:0
       };
     },
     mounted() {
@@ -90,11 +93,13 @@
       },
       touchStart(e) {
         this.touchX = e.touches[0].clientX;
+        this.startTime = new Date().getTime();
       },
       touchMove(e) {
         let x = e.changedTouches[0].clientX;
         let total = document.body.clientWidth;
         let baseSize = ((x - this.touchX) + ((x - this.touchX) * 0.6)) / total;
+        if(Math.abs(x-this.touchX) < 50) return;
         if ((this.current != 0 || baseSize < 0) && (this.current != this.tabData.length - 1 || baseSize > 0)) {
           this.currentDis = (-100 * this.current) + (baseSize * 100) + '%';
           this.left = this.$refs.item[this.current].offsetLeft + (this.$refs.item[2].offsetLeft - (this.$refs.item[1].offsetLeft + this.$refs.item[1].clientWidth)) * (-baseSize) + 'px';
@@ -104,11 +109,15 @@
         let x = e.changedTouches[0].clientX;
         let total = document.body.clientWidth;
         let baseSize = (x - this.touchX) / total
+        let now = new Date().getTime();
+        if(now - this.startTime > 1500 && Math.abs(baseSize) < 0.5){
+
+        }
         // if((0 < baseSize && baseSize < 0.3) || (-0.3 < baseSize && baseSize < 0)){
         //   this.currentDis = -100 *  this.current +'%';
         // }else
         //
-        if (baseSize > 0.3 || x - this.touchX > 50) {
+        else if (baseSize > 0.3 || x - this.touchX > 50) {
           if (this.current != 0) {
             this.current = this.current - 1;
           }
@@ -137,11 +146,11 @@
     align-items: center;
     position: relative;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: px2rem(20);
 
     .tab-item {
-      font-size: 16px;
-      padding-top: 10px;
+      font-size: px2rem(32);
+      padding-top: px2rem(20);
       cursor: pointer;
       // &+.tab-item{
       //   margin-left: 36px;
@@ -162,9 +171,9 @@
 
     .border-bottom {
       position: absolute;
-      bottom: -5px;
+      bottom: px2rem(-10);
       left: 0;
-      height: 2px;
+      height: px2rem(4);;
       background: #338cff;
       transition: all 0.5s;
     }

@@ -5,7 +5,7 @@
         我是子标题
       </template>
     </app-bar>
-    <nav-bar>
+    <nav-tabs>
       <template #1>
         <svg-icon icon-class="loading" />
         <i class="iconfont icon-message"></i>
@@ -13,16 +13,17 @@
       <template #2>
         <img alt="Vue logo" src="../assets/logo.png">
       </template>
-    </nav-bar>
+    </nav-tabs>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import NavTabs from "@/components/NavTabs.vue"
 
 export default {
   name: 'Home',
   components: {
+    NavTabs
   }
 }
 </script>
