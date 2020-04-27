@@ -16,10 +16,10 @@
     <slot name="tabBody">
       <div class="navbar-wrap">
         <div class="wrap-tab" :style="{ left: fllowScroll ? currentDis : '0'}"
-             @touchstart="touchStart"
-             @touchmove="touchMove"
-             @touchend="touchEnd"
-             @touchcancel="touchCancel"
+             @touchstart.stop="touchStart"
+             @touchmove.stop="touchMove"
+             @touchend.stop="touchEnd"
+             @touchcancel.stop="touchCancel"
         >
           <slot name="unFllowScroll">
             <div class="tab-body" v-for="(item,index) in tabData" :key="item.key" :style="{ left: 100 * index + '%' }">
@@ -62,6 +62,7 @@
         current: 0,
         left: 0,
         touchX: 0,
+        touchY:0,
         currentDis: 0,
         baseWidth: 10,
         startTime:0
@@ -93,12 +94,15 @@
       },
       touchStart(e) {
         this.touchX = e.touches[0].clientX;
+        this.touchY = e.touches[0].clientY;
         this.startTime = new Date().getTime();
       },
       touchMove(e) {
         let x = e.changedTouches[0].clientX;
+        let y = e.changedTouches[0].clientY;
         let total = document.body.clientWidth;
         let baseSize = ((x - this.touchX) + ((x - this.touchX) * 0.6)) / total;
+        if(Math.abs(y-this.touchY) > 200) return;
         if(Math.abs(x-this.touchX) < 50) return;
         if ((this.current != 0 || baseSize < 0) && (this.current != this.tabData.length - 1 || baseSize > 0)) {
           this.currentDis = (-100 * this.current) + (baseSize * 100) + '%';
@@ -107,6 +111,12 @@
       },
       touchEnd(e) {
         let x = e.changedTouches[0].clientX;
+        let y = e.changedTouches[0].clientY;
+        if(Math.abs(y-this.touchY) > 200) {
+          this.left = this.$refs.item[this.current].offsetLeft + 'px';
+          this.currentDis = -100 * this.current + '%';
+          return
+        }
         let total = document.body.clientWidth;
         let baseSize = (x - this.touchX) / total
         let now = new Date().getTime();
@@ -193,7 +203,7 @@
       position: absolute;
       top: 0;
       width: 100%;
-      height: 100%;
+      height: 2000px;
       background: red;
 
       &:first-child {

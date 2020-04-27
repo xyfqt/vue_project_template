@@ -8,11 +8,30 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name:"App",
+    created() {
+      document.body.addEventListener("touchmove",function (e) {
+        console.log('aa')
+        e.preventDefault();
+      },{passive: false})
+      document.documentElement.addEventListener("touchmove",function (e) {
+        console.log('bb')
+        e.preventDefault();
+      },{passive: false})
+    }
+  }
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 html{
 

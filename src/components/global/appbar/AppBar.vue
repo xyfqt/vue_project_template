@@ -28,9 +28,10 @@ export default {
   min-height: px2rem(100);
   background: #e7e7e7;
   .app-bar_wrap {
-    position: fixed;
+    position: relative;
     width: 100%;
     min-height: px2rem(100);
+    z-index: 9999999;
     background: #e7e7e7;
     top: 0;
     left: 0;
