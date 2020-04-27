@@ -204,7 +204,6 @@
       top: 0;
       width: 100%;
       min-height: 100%;
-      /*height: 2000px;*/
       background: red;
 
       &:first-child {

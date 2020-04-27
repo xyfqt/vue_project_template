@@ -13,11 +13,9 @@
     name:"App",
     created() {
       document.body.addEventListener("touchmove",function (e) {
-        console.log('aa')
         e.preventDefault();
       },{passive: false})
       document.documentElement.addEventListener("touchmove",function (e) {
-        console.log('bb')
         e.preventDefault();
       },{passive: false})
     }
