@@ -33,15 +33,6 @@
   height: 100vh;
   overflow: hidden;
 }
-html{
-
-}
-html,body{
-  padding: 0;
-  margin: 0;
-  font-size: calc(100vw / 10);
-}
-
 /*#nav {*/
 /*  padding: 30px;*/
 

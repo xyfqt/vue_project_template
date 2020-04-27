@@ -10,13 +10,14 @@ import './icons'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 
+import "./assets/css/global.scss"
 import "./assets/css/font/iconfont.css"
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 Vue.use(Vant);
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
