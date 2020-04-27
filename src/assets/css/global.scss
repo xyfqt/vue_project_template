@@ -1,5 +1,7 @@
 @import './reset';
 @import './normalize';
+@import "./font/iconfont.css";
+
 html,
 body {
   width: 100%;
@@ -11,4 +13,5 @@ body {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  font-family: Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
 }

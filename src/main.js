@@ -11,7 +11,6 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 
 import "./assets/css/global.scss"
-import "./assets/css/font/iconfont.css"
 
 Vue.config.productionTip = false;
 Vue.use(Vant);
