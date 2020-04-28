@@ -1,6 +1,6 @@
 const path = require('path')
-const autoprefixer = require('autoprefixer')
-const pxtorem = require('postcss-pxtorem')
+// const autoprefixer = require('autoprefixer')
+// const pxtorem = require('postcss-pxtorem')
 
 function resolve(dir) {
   return path.join(__dirname, './', dir)

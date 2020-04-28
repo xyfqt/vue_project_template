@@ -1,19 +1,21 @@
 <template>
   <div>
-    <ul class="select-tab" ref="ulparent">
-      <li
-        v-for="(item,index) in tabData"
-        :key="item.key"
-        class="tab-item"
-        :class="[{active: tabData[current].key === item.key},lineStyle]"
-        ref="item"
-        @click="selectTab(index)"
-      >{{ item.value }}
-      </li>
-      <li class="border-bottom" :style="{ left: left,marginLeft: -baseWidth / 2 + 'px'}" v-if="!lineStyle"
-          ref="line"></li>
-    </ul>
-    <slot name="tabBody">
+    <div class="tab-wrap" @touchmove.stop="tabTouchMove" ref="tabWrap">
+      <ul class="select-tab" ref="ulparent">
+        <li
+          v-for="(item,index) in tabData"
+          :key="item.key"
+          class="tab-item"
+          :class="[{active: tabData[current].key === item.key},lineStyle]"
+          ref="item"
+          @click="selectTab(index)"
+        >{{ item.value }}
+        </li>
+        <li class="border-bottom" :style="{ left: left,marginLeft: -baseWidth / 2 + 'px'}" v-if="!lineStyle"
+            ref="line"></li>
+      </ul>
+    </div>
+    <slot name="tabBody" v-if="showBody">
       <div class="navbar-wrap">
         <div class="wrap-tab" :style="{ left: fllowScroll ? currentDis : '0'}"
              @touchstart.stop="touchStart"
@@ -35,6 +37,8 @@
 </template>
 
 <script>
+  import move from "@/utils/move"
+
   export default {
     name: "NavTabs",
     props: {
@@ -44,7 +48,7 @@
           return [
             {key: 1, value: "tab1"},
             {key: 2, value: "tab2"},
-            {key: 3, value: "tab3"}
+            {key: 3, value: "tab3"},
           ];
         }
       },
@@ -55,6 +59,10 @@
       fllowScroll: {
         type: Boolean,
         default: true
+      },
+      showBody: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
@@ -62,10 +70,10 @@
         current: 0,
         left: 0,
         touchX: 0,
-        touchY:0,
+        touchY: 0,
         currentDis: 0,
         baseWidth: 10,
-        startTime:0
+        startTime: 0
       };
     },
     mounted() {
@@ -102,30 +110,39 @@
         let y = e.changedTouches[0].clientY;
         let total = document.body.clientWidth;
         let baseSize = ((x - this.touchX) + ((x - this.touchX) * 0.6)) / total;
-        if(Math.abs(y-this.touchY) > 200) return;
-        if(Math.abs(x-this.touchX) < 50) return;
+        if (Math.abs(y - this.touchY) > 200) return;
+        if (Math.abs(x - this.touchX) < 50) return;
         if ((this.current != 0 || baseSize < 0) && (this.current != this.tabData.length - 1 || baseSize > 0)) {
           this.currentDis = (-100 * this.current) + (baseSize * 100) + '%';
-          this.left = this.$refs.item[this.current].offsetLeft + (this.$refs.item[2].offsetLeft - (this.$refs.item[1].offsetLeft + this.$refs.item[1].clientWidth)) * (-baseSize) + 'px';
+          let computedDis = this.$refs.item[this.current].offsetLeft + (this.$refs.item[2].offsetLeft - (this.$refs.item[1].offsetLeft + this.$refs.item[1].clientWidth)) * (-baseSize);
+          this.left = computedDis + 'px';
+          if (this.$refs.ulparent.clientWidth > document.body.clientWidth) {
+            // move.startMove(this.$refs.tabWrap,{left:computedDis})
+            this.$refs.tabWrap.scrollLeft = computedDis;
+          }
         }
       },
       touchEnd(e) {
         let x = e.changedTouches[0].clientX;
         let y = e.changedTouches[0].clientY;
-        if(Math.abs(y-this.touchY) > 200) {
+        if (Math.abs(y - this.touchY) > 200) {
           this.left = this.$refs.item[this.current].offsetLeft + 'px';
           this.currentDis = -100 * this.current + '%';
+          if (this.$refs.ulparent.clientWidth > document.body.clientWidth) {
+            // move.startMove(this.$refs.tabWrap,{left:this.current ? this.$refs.item[this.current].offsetLeft : 0})
+            this.$refs.tabWrap.scrollLeft = this.current ? this.$refs.item[this.current].offsetLeft : 0;
+          }
           return
         }
         let total = document.body.clientWidth;
         let baseSize = (x - this.touchX) / total
         let now = new Date().getTime();
-        if(now - this.startTime > 1500 && Math.abs(baseSize) < 0.5){
+        if (now - this.startTime > 1500 && Math.abs(baseSize) < 0.5) {
 
         }
-        // if((0 < baseSize && baseSize < 0.3) || (-0.3 < baseSize && baseSize < 0)){
-        //   this.currentDis = -100 *  this.current +'%';
-        // }else
+          // if((0 < baseSize && baseSize < 0.3) || (-0.3 < baseSize && baseSize < 0)){
+          //   this.currentDis = -100 *  this.current +'%';
+          // }else
         //
         else if (baseSize > 0.3 || x - this.touchX > 50) {
           if (this.current != 0) {
@@ -138,10 +155,20 @@
         }
         this.left = this.$refs.item[this.current].offsetLeft + 'px';
         this.currentDis = -100 * this.current + '%';
+        if (this.$refs.ulparent.clientWidth > document.body.clientWidth) {
+          // move.startMove(this.$refs.tabWrap,{left:this.current ? this.$refs.item[this.current].offsetLeft : 0})
+          this.$refs.tabWrap.scrollLeft = this.current ? this.$refs.item[this.current].offsetLeft : 0;
+        }
       },
-      touchCancel(){
+      touchCancel() {
         this.left = this.$refs.item[this.current].offsetLeft + 'px';
         this.currentDis = -100 * this.current + '%';
+        if (this.$refs.ulparent.clientWidth > document.body.clientWidth) {
+          // move.startMove(this.$refs.tabWrap,{left:this.current ? this.$refs.item[this.current].offsetLeft : 0})
+          this.$refs.tabWrap.scrollLeft = this.current ? this.$refs.item[this.current].offsetLeft : 0;
+        }
+      },
+      tabTouchMove() {
       }
     }
   };
@@ -150,12 +177,17 @@
 <style lang="scss" scoped>
   @import "@/assets/css/style.scss";
 
+  .tab-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   .select-tab {
     display: flex;
     justify-content: space-around;
     align-items: center;
     position: relative;
-    width: 100%;
+    min-width: 100%;
     margin-bottom: px2rem(20);
 
     .tab-item {
