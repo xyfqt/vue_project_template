@@ -14,10 +14,15 @@
           </picture>
           <picture>
             <!--[if IE 9]><video style="display: none;"><![endif]-->
-            <source srcset="http://b-ssl.duitang.com/uploads/item/201901/09/20190109072726_aNNZd.thumb.700_0.jpeg" media="(max-width: 375px)">
+            <source srcset="./../assets/image/dark.png" media="(max-width: 375px)">
             <!--[if IE 9]></video><![endif]-->
-            <img srcset="http://b-ssl.duitang.com/uploads/item/201501/30/20150130155445_tTJFE.thumb.224_0.jpeg" alt="My default image">
+            <img srcset="./../assets/image/sun.png" alt="My default image">
           </picture>
+
+          <img src="./../assets/image/dark.png" srcset="./../assets/image/dark.png 1x,./../assets/image/sun.png 2x,./../assets/logo.png 3x" alt="photo" />
+
+          <div class="test-bg"></div>
+
         </div>
 
       </template>
@@ -47,6 +52,14 @@
      img {
       width: px2rem(120);
       height: px2rem(120);
+    }
+    .test-bg{
+      width: px2rem(120);
+      height: px2rem(120);
+      background-image: image-set("./../assets/image/dark.png" 1x,
+        "./../assets/image/sun.png" 2x,
+        "./../assets/logo.png" 3x);
+      background-size: cover;
     }
   }
 </style>
