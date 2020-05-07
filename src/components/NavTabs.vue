@@ -84,6 +84,18 @@
           this.left = this.$refs.item[this.current].offsetLeft + "px";
         }
       });
+      window.onresize =  () => {
+        this.$nextTick(() => {
+          if (this.$refs.line) {
+            this.$refs.line.style.width =
+              this.$refs.item[this.current].clientWidth + this.baseWidth + "px";
+            this.left = this.$refs.item[this.current].offsetLeft + "px";
+          }
+        });
+      }
+    },
+    destroyed() {
+      window.onresize =  () => {}
     },
     watch: {
       current() {
@@ -240,6 +252,12 @@
 
       &:first-child {
         background: aqua;
+      }
+
+      @media only screen and (min-width: 375px)  and (max-width: 500px) {
+        &:first-child {
+          background: #338cff;
+        }
       }
 
       &:nth-child(2) {

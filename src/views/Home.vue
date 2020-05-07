@@ -18,13 +18,9 @@
             <!--[if IE 9]></video><![endif]-->
             <img srcset="./../assets/image/sun.png" alt="My default image">
           </picture>
-
           <img src="./../assets/image/dark.png" srcset="./../assets/image/dark.png 1x,./../assets/image/sun.png 2x,./../assets/logo.png 3x" alt="photo" />
-
           <div class="test-bg"></div>
-
         </div>
-
       </template>
       <template #2>
         <svg-icon icon-class="loading"/>
