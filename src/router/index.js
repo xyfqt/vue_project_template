@@ -2,6 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+import goodsRouter from "./module/goods";
+import userRouter from "./module/user";
+import sxyRouter from "./module/sxy";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -11,6 +15,18 @@ const routes = [
     component: Home
   },
   {
+    path: '/test',
+    name: 'Test',
+    meta: {
+      title: 'Test'
+    },
+    component: () => import( /* webpackChunkName: "Test" */ '../views/Test.vue')
+  },
+  ...goodsRouter,
+  ...userRouter,
+  ...sxyRouter,
+
+  {
     path: '/500',
     name: 'Error',
     meta: {
@@ -18,14 +34,6 @@ const routes = [
     },
     component: () => import( /* webpackChunkName: "Error" */ '../views/Error.vue')
   },
-  // {
-  //   path: '/not-found',
-  //   name: 'NotFound',
-  //   meta: {
-  //     title: 'Not Found'
-  //   },
-  //   component: () => import( /* webpackChunkName: "NotFound" */ '../views/NotFound.vue')
-  // },
   {
     path: '*',
     name: 'NotFound',

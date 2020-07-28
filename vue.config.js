@@ -8,6 +8,7 @@ function resolve(dir) {
 
 module.exports = {
   lintOnSave:false,
+  outputDir:'fbh5',//默认打包目录名 == webpack的output.path,
   // css: {
   //   sourceMap: true,
   //   loaderOptions: {

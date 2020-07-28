@@ -37,7 +37,6 @@
 </template>
 
 <script>
-  import move from "@/utils/move"
 
   export default {
     name: "NavTabs",

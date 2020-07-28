@@ -12,29 +12,29 @@ export default {
         return phone.match(phoneReg);
     },
 
-    isEmpty(obj, flag) {
-        if (obj === 'null' || obj == 'undefined' || !obj) {
-            return true
+  isEmpty(obj, flag) {
+    if (obj === 'null' || obj == 'undefined' || !obj) {
+      return true
+    }
+    if (flag) {
+      if (Array.isArray(obj) && !obj.length) {
+        return true
+      }
+      if (typeof obj === 'object') {
+        for (var key in obj) {
+          return false// 返回false，不为空对象
         }
-        if (flag) {
-            if (Array.isArray(obj) && !obj.length) {
-                return true
-            }
-            if (typeof obj === 'object') {
-                for (var key in obj) {
-                    return false// 返回false，不为空对象
-                }
-                return true
-            }
-        }
-        return false
-    },
+        return true
+      }
+    }
+    return false
+  },
 
     deepClone(source) {
         if (!source && typeof source !== 'object') {
             throw new Error('error arguments', 'deepClone')
         }
-        let targetObj = source.constructor === Array ? [] : {}
+        const targetObj = source.constructor === Array ? [] : {}
         Object.keys(source).forEach(keys => {
             if (source[keys] && typeof source[keys] === 'object') {
                 targetObj[keys] = this.deepClone(source[keys])
@@ -42,9 +42,6 @@ export default {
                 targetObj[keys] = source[keys]
             }
         })
-        if (Object.prototype.toString.call(source) === '[object Date]') {
-            targetObj = new Date(source.getTime())
-        }
         return targetObj
     },
     formaterTime(timestamp, format) {
@@ -84,44 +81,6 @@ export default {
         }
         return format
     },
-    versionCompare(newVersion, oldVersion) {
-        var newArr = newVersion.toString().split('.')
-        var oldArr = oldVersion.toString().split('.')
-
-        var vlength =
-            newArr.length > oldArr.length ? newArr.length : oldArr.length
-
-        for (var i = 0; i < vlength; i++) {
-            if (oldArr[i] == undefined) {
-                return true
-            } else if (newArr[i] == undefined) {
-                return false
-            }
-
-            var newN = newArr[i]
-            var oldN = oldArr[i]
-
-            var nlength = newN.length > oldN.length ? newN.length : oldN.length
-
-            if (newN.length < nlength) {
-                newN = '0'.repeat(nlength - newN.length) + newN
-            } else if (oldN.length < nlength) {
-                oldN = '0'.repeat(nlength - oldN.length) + oldN
-            }
-
-            newN = newN.split('')
-            oldN = oldN.split('')
-
-            for (var j = 0; j < nlength; j++) {
-                if (newN[j].localeCompare(oldN[j]) == 1) {
-                    return true
-                } else if (newN[j].localeCompare(oldN[j]) == -1) {
-                    return false
-                }
-            }
-        }
-        return false
-    },
 
 
     filterPrice(amount = 0, digist = 2) {
@@ -144,6 +103,6 @@ export default {
             decimalStr = strArr[1].substr(0, digist);
             return `${strArr[0]}\.${decimalStr}`;
         }
-    }
+      }
 
 }
